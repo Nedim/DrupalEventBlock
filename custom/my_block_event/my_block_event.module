@@ -1,0 +1,10 @@
+<?php
+function my_block_event_theme($existing, $type, $theme, $path) {
+  return [
+    'mytemplate' => [
+      'variables' => ['events' => NULL],
+    ],
+  ];
+}
+
+?>

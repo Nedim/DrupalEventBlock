@@ -1,0 +1,7 @@
+name: My Block Event
+type: module
+description: Defines a custom block.
+core: 8.x
+package: TaHa
+dependencies:
+  - block

@@ -1,0 +1,6 @@
+{% for event in events %}
+  <li>
+    <b>{{ event.title|e }}</b><br />
+    {{ event.status|e }}
+  </li>
+{% endfor %}
