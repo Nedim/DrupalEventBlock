@@ -1,0 +1,7 @@
+my_block_event.content:
+  defaults:
+    _title: 'Event status'
+  requirements:
+    _permission: 'access content'
+  options:
+    no_cache: 'TRUE'

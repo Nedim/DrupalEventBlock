@@ -1,0 +1,3 @@
+services:
+  my_block_event.event_status:
+    class: Drupal\my_block_event\EventStatus

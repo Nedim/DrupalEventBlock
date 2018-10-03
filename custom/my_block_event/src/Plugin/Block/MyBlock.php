@@ -28,20 +28,20 @@ class MyBlock extends BlockBase {
    */
   public function build() {
 
-    $nids = \Drupal::entityQuery('node')->condition('type','event')->execute();
-    $nodes =  \Drupal\node\Entity\Node::loadMultiple($nids);
-
+    $node = \Drupal::routeMatch()->getParameter('node');
     $events = array();
-    foreach ($nodes as $node){
+    if($node->getType() == "event") {
 
       $date = $node->field_event_date->value;
-
-      $diff = $this->getDiffDays($date);
+      $diff = \Drupal::service('my_block_event.event_status')->getDiffDays($date);
 
       $event['title'] = $node->title->value;
       $event['status'] = $diff;
-
       array_push($events, $event);
+
+    } else {
+
+      $output = "Only for Event Pages.";
     }
 
     return [
@@ -51,29 +51,6 @@ class MyBlock extends BlockBase {
         'max-age' => 0,
       ),
     ];
-  }
-
-
-  protected function getDiffDays($date1){
-
-    $from=date_create(date('Y-m-d'));
-    $date = date('Y-m-d', strtotime($date1));
-
-    $to = date_create($date);
-
-    $diff=date_diff($to,$from);
-
-    $message="";
-
-    if($diff->format('%R') == '-'){
-      $message = "Days left to event start:".$diff->format('%a');
-    }elseif ($diff->format('%a') == 0){
-      $message = "This event is happening today!";
-    }else{
-      $message = "The event has ended.";
-    }
-
-    return $message;
   }
 
   /**
